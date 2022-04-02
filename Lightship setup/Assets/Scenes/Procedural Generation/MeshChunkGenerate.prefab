@@ -15,9 +15,13 @@ MonoBehaviour:
   _groundPrefabs:
   - {fileID: 0}
   _wallPrefabs:
-  - {fileID: 8341445486499938904, guid: 4b15ffab221864a44bc4cc2952c90b67, type: 3}
-  - {fileID: 2673370635237904616, guid: 923eded68c7fb78438e1b6e8f3ed6aa7, type: 3}
-  - {fileID: 3989545142343810009, guid: 4f32cfa07d33ca1498735444562fa32a, type: 3}
+  - {fileID: 6892204006400732976, guid: 57af7224611030841b49512befc21a2c, type: 3}
+  - {fileID: 1467924617149103830, guid: 8b6670f152b5a294384eb0502537658d, type: 3}
+  - {fileID: 5851273048262757770, guid: b1d4c008bfd40914780c154f8c7613ab, type: 3}
+  - {fileID: 2804036876101038444, guid: fc9d7b5ab94ea2b4a877c8d2d4541fca, type: 3}
+  - {fileID: 7487746840562161907, guid: 6f9e37c6d7768234287b7abb95c6d5c5, type: 3}
+  - {fileID: 1592176189758897203, guid: 142daac5e73b41e4696d9f5b5757333b, type: 3}
+  - {fileID: 5566268613155886026, guid: ae53abe0216d222419d2b1c2d0115ab9, type: 3}
   _groundNormalTolerance: 0.01
   _wallNormalTolerance: 0.001
   _spawnMinVertexCount: 100
