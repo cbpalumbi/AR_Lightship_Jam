@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 145762427546867204}
   - component: {fileID: 2729512800599106254}
   - component: {fileID: -6019560932028997654}
+  - component: {fileID: 3140426939695675766}
   m_Layer: 0
   m_Name: samosa
   m_TagString: Untagged
@@ -99,3 +100,16 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!65 &3140426939695675766
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4531132627146031899}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.20799041, y: 0.17587155, z: 0.12340933}
+  m_Center: {x: 0, y: 0, z: 0}
