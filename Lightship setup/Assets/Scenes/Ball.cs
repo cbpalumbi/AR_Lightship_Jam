@@ -44,7 +44,7 @@ public class Ball : MonoBehaviour
             _ball.transform.position = _camera.transform.position + _camera.transform.forward;
  
             //then add a force to the rigid body to launch it from teh camera.
-            float force = 100.0f;
+            float force = 500.0f;
             rb.AddForce(_camera.transform.forward * force);
  
         }
