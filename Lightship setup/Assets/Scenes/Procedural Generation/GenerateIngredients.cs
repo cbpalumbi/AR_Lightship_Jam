@@ -6,7 +6,7 @@ using UnityEngine;
  
 using Random = UnityEngine.Random;
  
-public class GenerateIngredients: MonoBehaviour
+public class GardenChunk: MonoBehaviour
 {
   public List<GameObject> _groundPrefabs;
   public List<GameObject> _wallPrefabs;
@@ -16,8 +16,14 @@ public class GenerateIngredients: MonoBehaviour
   public int _despawnMaxVertexCount = 50;
   public float _growthDuration = 4.0f;
   private MeshFilter _filter;
-  private GameObject _plant;
-  
+  private GameObject _ingredient;
+
+  // List of all the GameObjects placed in the world
+  // private List<GameObject> _worldIngredients;
+  // Dictionary that contains how many of each ingredient
+  // there are in the world
+  // Dictionary<string, int> _ingredientCount = new Dictionary<string, int>(); 
+ 
   private void Start()
   {
     _filter = GetComponent<MeshFilter>();
@@ -29,17 +35,20 @@ public class GenerateIngredients: MonoBehaviour
   private void Update()
   {
     int vertexCount = _filter.sharedMesh.vertexCount;
-    if (vertexCount >= _spawnMinVertexCount && !(bool)_plant)
+    if (vertexCount >= _spawnMinVertexCount && !(bool)_ingredient)
     {
       // plant a plant! (might not succeed)
-      _plant = InstantiatePlant(_filter.sharedMesh);
+      _ingredient = InstantiatePlant(_filter.sharedMesh);
+      // addIngredient(_ingredient);
+      
     }
-    else if (vertexCount <= _despawnMaxVertexCount && (bool)_plant)
+    else if (vertexCount <= _despawnMaxVertexCount && (bool)_ingredient)
     {
       // pull a plant!
-      StopCoroutine(PlaceIngredient());
-      Destroy(_plant);
-      _plant = null;
+      StopCoroutine(GrowPlant());
+      // removeIngredient(_ingredient);
+      Destroy(_ingredient);
+      _ingredient = null;
     }
   }
  
@@ -64,7 +73,7 @@ public class GenerateIngredients: MonoBehaviour
       plant.transform.localPosition = position;
       plant.transform.localRotation = rotation;
       plant.transform.localScale = Vector3.zero;
-      StartCoroutine(PlaceIngredient());
+      StartCoroutine(GrowPlant());
       return plant;
     }
  
@@ -81,18 +90,29 @@ public class GenerateIngredients: MonoBehaviour
     return wall || ground;
   }
  
-  private IEnumerator PlaceIngredient()
+  private IEnumerator GrowPlant()
   {
     yield return null;
  
     float progress = 0.0f;
-
+    // end scale has Y inverted because of the transform on the mesh root
     Vector3 endScale = new Vector3(0.1f, 0.1f, 0.1f);
-    while (progress < 1.0f && (bool)_plant)
+    while (progress < 1.0f && (bool)_ingredient)
     {
       progress = Math.Min(1.0f, progress + Time.deltaTime / _growthDuration);
-      _plant.transform.localScale = Vector3.Lerp(Vector3.zero, endScale, progress);
+      _ingredient.transform.localScale = Vector3.Lerp(Vector3.zero, endScale, progress);
       yield return null;
     }
   }
+
+  /*
+  private void removeIngredient(GameObject ingridient) {
+    _worldIngredients.Remove(_ingredient);
+    
+  }
+
+  private void addIngredient(GameObject ingredient) {
+    _worldIngredients.Add(_ingredient);
+  }
+  */
 }

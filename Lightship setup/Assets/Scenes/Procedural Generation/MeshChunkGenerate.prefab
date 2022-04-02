@@ -13,16 +13,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _groundPrefabs:
-  - {fileID: 1207764151563176, guid: c501d75b5cf654d09ae481f31a1d21cd, type: 3}
+  - {fileID: 0}
   _wallPrefabs:
-  - {fileID: 1690378993071234, guid: 9d8db845d71294e1ea024a46c1e08d99, type: 3}
-  - {fileID: 1238169559571748, guid: 76ba85fefaf7241309223118c83bab7c, type: 3}
-  - {fileID: 1405076729986686, guid: bd72bae70b74d4f65bfd46a82dc98fcb, type: 3}
+  - {fileID: 8341445486499938904, guid: 4b15ffab221864a44bc4cc2952c90b67, type: 3}
+  - {fileID: 2673370635237904616, guid: 923eded68c7fb78438e1b6e8f3ed6aa7, type: 3}
+  - {fileID: 3989545142343810009, guid: 4f32cfa07d33ca1498735444562fa32a, type: 3}
   _groundNormalTolerance: 0.01
   _wallNormalTolerance: 0.001
   _spawnMinVertexCount: 100
   _despawnMaxVertexCount: 50
-  _growthDuration: 1
+  _growthDuration: 2
 --- !u!1001 &5205096391557326758
 PrefabInstance:
   m_ObjectHideFlags: 0
