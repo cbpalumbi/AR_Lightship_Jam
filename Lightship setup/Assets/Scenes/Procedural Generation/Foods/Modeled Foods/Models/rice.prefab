@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 3097492441244543276}
   - component: {fileID: 943635784773557734}
   - component: {fileID: 6687804013131860002}
+  - component: {fileID: 1144667583961858460}
   m_Layer: 0
   m_Name: rice
   m_TagString: Untagged
@@ -101,3 +102,16 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!65 &1144667583961858460
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1592176189758897203}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.0053500556, y: 0.004096642, z: 0.00541065}
+  m_Center: {x: 0, y: 0.00040608412, z: 0.00005662907}

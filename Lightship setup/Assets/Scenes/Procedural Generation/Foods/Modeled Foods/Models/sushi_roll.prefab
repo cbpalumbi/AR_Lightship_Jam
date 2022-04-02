@@ -93,6 +93,7 @@ GameObject:
   - component: {fileID: 23748431768545633}
   - component: {fileID: 2859970873477668267}
   - component: {fileID: -5393968435856890817}
+  - component: {fileID: 8629245588486334030}
   m_Layer: 0
   m_Name: sushi_roll
   m_TagString: Untagged
@@ -181,3 +182,16 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!65 &8629245588486334030
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4373087783904230526}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.08885311, y: 0.026464209, z: 0.08885311}
+  m_Center: {x: 0, y: 0, z: 0}
