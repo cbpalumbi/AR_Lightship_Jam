@@ -26,7 +26,7 @@ MonoBehaviour:
   _spawnMinVertexCount: 100
   _despawnMaxVertexCount: 50
   _growthDuration: 2
-  _numIngredientsPerChunk: 1
+  _numIngredientsPerChunk: 3
 --- !u!1001 &8010779102764538064
 PrefabInstance:
   m_ObjectHideFlags: 0
