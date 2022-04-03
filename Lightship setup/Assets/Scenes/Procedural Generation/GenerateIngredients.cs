@@ -14,15 +14,11 @@ public class GenerateIngredients: MonoBehaviour
   public float _wallNormalTolerance = 0.001f;
   public int _spawnMinVertexCount = 100;
   public int _despawnMaxVertexCount = 50;
-  // public float _growthDuration = 4.0f;
+  public float _growthDuration = 4.0f;
+  public int _numIngredientsPerChunk = 1;
+  private int _numIngredientsSpawned = 0;
   private MeshFilter _filter;
   private GameObject _ingredient;
-
-  // List of all the GameObjects placed in the world
-  // private List<GameObject> _worldIngredients;
-  // Dictionary that contains how many of each ingredient
-  // there are in the world
-  // Dictionary<string, int> _ingredientCount = new Dictionary<string, int>(); 
  
   private void Start()
   {
@@ -34,32 +30,30 @@ public class GenerateIngredients: MonoBehaviour
  
   private void Update()
   {
-    //Debug.Log("Update");
     int vertexCount = _filter.sharedMesh.vertexCount;
-    //Debug.Log(vertexCount);
     if (vertexCount >= _spawnMinVertexCount && !(bool)_ingredient)
     {
-      // plant a plant! (might not succeed)
-      //Debug.Log("Place Attempt");
-      _ingredient = InstantiatePlant(_filter.sharedMesh);
-      // addIngredient(_ingredient);
-      
+      // Place a ingredient! (might not succeed)
+      for (int i = 0; i < _numIngredientsPerChunk; ++i) {
+        _ingredient = InstantiateIngredient(_filter.sharedMesh);
+      }
     }
     else if (vertexCount <= _despawnMaxVertexCount && (bool)_ingredient)
     {
-      // removeIngredient(_ingredient);
+      // delete a ingredient!
+      StopCoroutine(SpawnIngredient());
       Destroy(_ingredient);
       _ingredient = null;
+      --_numIngredientsSpawned;
     }
   }
  
-  private GameObject InstantiatePlant(Mesh mesh)
+  private GameObject InstantiateIngredient(Mesh mesh)
   {
     bool wall;
     Vector3 position;
     Vector3 normal;
-    // if we find a suitable vertex, plop a plant at that location
-    // Debug.Log(FindVertex(_filter.sharedMesh, out wall, out position, out normal));
+    // if we find a suitable vertex, plop a ingredient at that location
     if (FindVertex(_filter.sharedMesh, out wall, out position, out normal))
     {
       GameObject prefab = wall
@@ -72,10 +66,11 @@ public class GenerateIngredients: MonoBehaviour
  
       // use local position/rotation because of the different coordinate system
       GameObject ingredient = Instantiate(prefab, transform, false);
-      ingredient.transform.localPosition = position;
+      Vector3 addVector = new Vector3(0.0f, -0.3f, 0.0f);
+      ingredient.transform.localPosition = position + addVector;
       ingredient.transform.localRotation = rotation;
       ingredient.transform.localScale = Vector3.zero;
-      //Debug.Log("placed");
+      StartCoroutine(SpawnIngredient());
       return ingredient;
     }
  
@@ -87,21 +82,23 @@ public class GenerateIngredients: MonoBehaviour
     int v = Random.Range(0, mesh.vertexCount);
     position = mesh.vertices[v];
     normal = mesh.normals[v];
-    Debug.Log(normal.y);
     bool ground = normal.y > 1.0f - _groundNormalTolerance && _groundPrefabs.Count > 0;
     wall = Math.Abs(normal.y) < _wallNormalTolerance && _wallPrefabs.Count > 0;
     return wall || ground;
   }
-  
-
-  /*
-  private void removeIngredient(GameObject ingridient) {
-    _worldIngredients.Remove(_ingredient);
-    
+ 
+  private IEnumerator SpawnIngredient()
+  {
+    yield return null;
+ 
+    float progress = 0.0f;
+    // end scale has Y inverted because of the transform on the mesh root
+    Vector3 endScale = new Vector3(1.0f, -1.0f, 1.0f);
+    while (progress < 1.0f && (bool)_ingredient)
+    {
+      progress = Math.Min(1.0f, progress + Time.deltaTime / _growthDuration);
+      _ingredient.transform.localScale = Vector3.Lerp(Vector3.zero, endScale, progress);
+      yield return null;
+    }
   }
-
-  private void addIngredient(GameObject ingredient) {
-    _worldIngredients.Add(_ingredient);
-  }
-  */
 }

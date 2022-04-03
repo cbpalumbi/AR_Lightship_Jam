@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 7152292622364932655}
   - component: {fileID: 4946917730166345445}
   - component: {fileID: 7830274007835380650}
-  - component: {fileID: -7083064144427917008}
+  - component: {fileID: 2051704816943303236}
   m_Layer: 0
   m_Name: cheesewheel
   m_TagString: Untagged
@@ -97,7 +97,7 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.23745222, y: 0.13996893, z: 0.23745222}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!54 &-7083064144427917008
+--- !u!54 &2051704816943303236
 Rigidbody:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
