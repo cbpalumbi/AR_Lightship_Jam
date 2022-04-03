@@ -23,6 +23,8 @@ namespace Niantic.ARDKExamples.Helpers
   public class ARHitTester: MonoBehaviour
   {
     /// The camera used to render the scene. Used to get the center of the screen.
+
+    //public GameObject grabManager;
     public Camera Camera;
 
     /// The types of hit test results to filter against when performing a hit test.
@@ -90,10 +92,13 @@ namespace Niantic.ARDKExamples.Helpers
       {
         TouchBegan(touch);
       }
+
     }
 
     private void TouchBegan(Touch touch)
     {
+      //grabManager.GetComponent<grabObject>().pickObj();
+      
       var currentFrame = _session.CurrentFrame;
       if (currentFrame == null)
       {
