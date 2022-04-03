@@ -6,7 +6,7 @@ using UnityEngine;
  
 using Random = UnityEngine.Random;
  
-public class GenerateIngredients: MonoBehaviour
+public class GardenChunk: MonoBehaviour
 {
   public List<GameObject> _groundPrefabs;
   public List<GameObject> _wallPrefabs;
@@ -17,7 +17,7 @@ public class GenerateIngredients: MonoBehaviour
   public float _growthDuration = 4.0f;
   private MeshFilter _filter;
   private GameObject _plant;
-  
+ 
   private void Start()
   {
     _filter = GetComponent<MeshFilter>();
@@ -37,7 +37,7 @@ public class GenerateIngredients: MonoBehaviour
     else if (vertexCount <= _despawnMaxVertexCount && (bool)_plant)
     {
       // pull a plant!
-      StopCoroutine(PlaceIngredient());
+      StopCoroutine(GrowPlant());
       Destroy(_plant);
       _plant = null;
     }
@@ -64,7 +64,7 @@ public class GenerateIngredients: MonoBehaviour
       plant.transform.localPosition = position;
       plant.transform.localRotation = rotation;
       plant.transform.localScale = Vector3.zero;
-      StartCoroutine(PlaceIngredient());
+      StartCoroutine(GrowPlant());
       return plant;
     }
  
@@ -81,13 +81,13 @@ public class GenerateIngredients: MonoBehaviour
     return wall || ground;
   }
  
-  private IEnumerator PlaceIngredient()
+  private IEnumerator GrowPlant()
   {
     yield return null;
  
     float progress = 0.0f;
-
-    Vector3 endScale = new Vector3(0.1f, 0.1f, 0.1f);
+    // end scale has Y inverted because of the transform on the mesh root
+    Vector3 endScale = new Vector3(1.0f, -1.0f, 1.0f);
     while (progress < 1.0f && (bool)_plant)
     {
       progress = Math.Min(1.0f, progress + Time.deltaTime / _growthDuration);

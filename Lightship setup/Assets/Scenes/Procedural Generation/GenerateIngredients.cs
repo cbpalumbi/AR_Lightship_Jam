@@ -6,7 +6,7 @@ using UnityEngine;
  
 using Random = UnityEngine.Random;
  
-public class GardenChunk: MonoBehaviour
+public class GenerateIngredients: MonoBehaviour
 {
   public List<GameObject> _groundPrefabs;
   public List<GameObject> _wallPrefabs;
@@ -14,7 +14,7 @@ public class GardenChunk: MonoBehaviour
   public float _wallNormalTolerance = 0.001f;
   public int _spawnMinVertexCount = 100;
   public int _despawnMaxVertexCount = 50;
-  public float _growthDuration = 4.0f;
+  // public float _growthDuration = 4.0f;
   private MeshFilter _filter;
   private GameObject _ingredient;
 
@@ -34,10 +34,13 @@ public class GardenChunk: MonoBehaviour
  
   private void Update()
   {
+    //Debug.Log("Update");
     int vertexCount = _filter.sharedMesh.vertexCount;
+    //Debug.Log(vertexCount);
     if (vertexCount >= _spawnMinVertexCount && !(bool)_ingredient)
     {
       // plant a plant! (might not succeed)
+      //Debug.Log("Place Attempt");
       _ingredient = InstantiatePlant(_filter.sharedMesh);
       // addIngredient(_ingredient);
       
@@ -56,6 +59,7 @@ public class GardenChunk: MonoBehaviour
     Vector3 position;
     Vector3 normal;
     // if we find a suitable vertex, plop a plant at that location
+    // Debug.Log(FindVertex(_filter.sharedMesh, out wall, out position, out normal));
     if (FindVertex(_filter.sharedMesh, out wall, out position, out normal))
     {
       GameObject prefab = wall
@@ -67,11 +71,12 @@ public class GardenChunk: MonoBehaviour
         : Quaternion.Euler(0, Random.Range(0.0f, 360.0f), 0);
  
       // use local position/rotation because of the different coordinate system
-      GameObject plant = Instantiate(prefab, transform, false);
-      plant.transform.localPosition = position;
-      plant.transform.localRotation = rotation;
-      plant.transform.localScale = Vector3.zero;
-      return plant;
+      GameObject ingredient = Instantiate(prefab, transform, false);
+      ingredient.transform.localPosition = position;
+      ingredient.transform.localRotation = rotation;
+      ingredient.transform.localScale = Vector3.zero;
+      //Debug.Log("placed");
+      return ingredient;
     }
  
     return null;
@@ -82,6 +87,7 @@ public class GardenChunk: MonoBehaviour
     int v = Random.Range(0, mesh.vertexCount);
     position = mesh.vertices[v];
     normal = mesh.normals[v];
+    Debug.Log(normal.y);
     bool ground = normal.y > 1.0f - _groundNormalTolerance && _groundPrefabs.Count > 0;
     wall = Math.Abs(normal.y) < _wallNormalTolerance && _wallPrefabs.Count > 0;
     return wall || ground;
