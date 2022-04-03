@@ -9,8 +9,8 @@ public class Cooking : MonoBehaviour
     private string currRecipe = "";
     Dictionary<string, string[]> recipes = new Dictionary<string, string[]>() {
         {"sushi", new [] {"rice", "fish", "seaweed"}},
-        {"risotto", new [] {"rice", "cheese", "peas"}},
-        {"samosa", new [] {"flour", "potato", "peas"}}
+        {"risotto", new [] {"rice", "cheese", "pea"}},
+        {"samosa", new [] {"flour", "potato", "pea"}}
     };
 
     string[] food = new string[] {"sushi", "risotto", "samosa"};
@@ -22,12 +22,16 @@ public class Cooking : MonoBehaviour
     public ParticleSystem failParticles;
     public ParticleSystem successParticles;
 
+    private UIManager UIManagerobj;
+
     private int numIngredient = 0;
 
     
     void Start()
     {
+        UIManagerobj = GameObject.Find("RecipeImages").GetComponent<UIManager>();
         currRecipe = food[Random.Range(0, 3)];
+        UIManagerobj.ChangeRecipeImage(currRecipe);
         sushi.GetComponent<Renderer>().enabled = false;
         risotto.GetComponent<Renderer>().enabled = false;
         samosa.GetComponent<Renderer>().enabled = false;
@@ -51,23 +55,24 @@ public class Cooking : MonoBehaviour
         // Check ingredient added is valid
         // Invalid if the tag isn't an ingredient in the recipe or if
         // there is already one of that ingredient in the pot
-        for (int i = 0; i < numIngredient; ++i) {
-            if (tagHit == inPot[i]) {
+        foreach (string itemInPot in inPot) {
+            if (itemInPot == tagHit){
                 StartCoroutine(FailOrder());
                 return;
             }
         }
         bool inRecipe = false;
-        for (int i = 0; i < 3; ++i) {
-            if (tagHit == recipes[currRecipe][i]) {
+        foreach (string recipeIngredient in recipes[currRecipe]) {
+            if (tagHit == recipeIngredient) {
                 inRecipe = true;
-                break;
             }
         }
         if (!inRecipe) {
             StartCoroutine(FailOrder());
+            inRecipe = false;
             return;
         }
+
         // Add ingredient tag to the pot
         // If there are 3 items check then recipe must be complete
         inPot.Add(tagHit);
@@ -84,9 +89,11 @@ public class Cooking : MonoBehaviour
         currRecipe = food[Random.Range(0, 3)];
         inPot.Clear();
         numIngredient = 0;
+        UIManagerobj.ChangeRecipeImage(currRecipe);
     }
 
     IEnumerator RecipeComplete() {
+        successParticles.Play();
         switch (currRecipe) {
             case "sushi":
                 Debug.Log("showing sushi");
@@ -101,8 +108,7 @@ public class Cooking : MonoBehaviour
             default:
                 Debug.Log("None recipe complete");
                 break;
-        }
-        successParticles.Play();
+        }  
 
         // Wait 3 seconds before making food vanish
         yield return new WaitForSeconds(3);
@@ -128,8 +134,8 @@ public class Cooking : MonoBehaviour
     IEnumerator FailOrder() {
         Debug.Log("Order Failed");
         failParticles.Play();
-        yield return new WaitForSeconds(2);
         ChangeRecipe();
+        yield return new WaitForSeconds(2);
         failParticles.Stop();
     }
 }
