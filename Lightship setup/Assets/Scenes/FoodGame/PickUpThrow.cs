@@ -10,6 +10,7 @@ using Unity.Collections;
 using Niantic.ARDK.AR.Mesh;
 using Niantic.ARDK.Utilities;
 
+using UnityEngine.iOS;
  
 public class PickUpThrow : MonoBehaviour
 {
@@ -33,7 +34,7 @@ public class PickUpThrow : MonoBehaviour
         //if the user touches the screen then pick up nearest object in range
         var touch = PlatformAgnosticInput.GetTouch(0);
         Debug.Log("Touch");
-        if (touch.phase == TouchPhase.Began)
+        if (Input.touchCount > 0)
         {
             if (heldObject == null) {
                 GetClosestObject();
