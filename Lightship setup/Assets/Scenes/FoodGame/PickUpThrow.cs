@@ -42,7 +42,7 @@ public class PickUpThrow : MonoBehaviour
             }
             else {
                 Debug.Log("Drop");
-                ThrowHeldObject();
+                StartCoroutine(ThrowHeldObject());
             }
         }
     }
@@ -68,8 +68,6 @@ public class PickUpThrow : MonoBehaviour
                 return false; 
 
         }
-        return false;
-        
     }
 
     private void GetClosestObject() {
@@ -79,16 +77,9 @@ public class PickUpThrow : MonoBehaviour
         Collider nearestCollider = null;
         float minSqrDistance = Mathf.Infinity;
 
-        // for (int i = 0; i < colliders.Length; i++) {
-        //     if (!ValidTag(colliders[i].gameObject.tag)) {
-        //         colliders = colliders.RemoveAt(i);
-        //         //i++;
-        //     }
-        // }
-
         for (int i = 0; i < colliders.Length; i++) {  
             float sqrDistanceToCenter = (center - colliders[i].transform.position).sqrMagnitude;
-            if (sqrDistanceToCenter < minSqrDistance)
+            if (ValidTag(colliders[i].gameObject.tag) && (sqrDistanceToCenter < minSqrDistance))
             {
                 minSqrDistance = sqrDistanceToCenter;
                 nearestCollider = colliders[i];
@@ -102,24 +93,20 @@ public class PickUpThrow : MonoBehaviour
 
     IEnumerator PickUp(GameObject obj) {
         heldObject = obj;
-
-        if (ValidTag(heldObject.tag)) {
-        
-            obj.GetComponent<Collider>().enabled = false;
-            obj.GetComponent<Rigidbody>().isKinematic = true;
-            obj.transform.position = hands.transform.position;
-            obj.transform.rotation = hands.transform.rotation;
-            obj.transform.parent = hands.transform;
-            yield return new WaitForSeconds(2);
-        }
-        
+        obj.GetComponent<Collider>().enabled = false;
+        obj.GetComponent<Rigidbody>().isKinematic = true;
+        obj.transform.position = hands.transform.position;
+        obj.transform.rotation = hands.transform.rotation;
+        obj.transform.parent = hands.transform;
+        yield return new WaitForSeconds(2); 
     }
 
-    private void ThrowHeldObject() {
+    IEnumerator ThrowHeldObject() {
         heldObject.transform.parent = null;
         heldObject.GetComponent<Collider>().enabled = true;
         heldObject.GetComponent<Rigidbody>().isKinematic = false;
         heldObject.GetComponent<Rigidbody>().AddForce(heldObject.transform.forward * horForce);
         heldObject = null;
+        yield return new WaitForSeconds(2); 
     }
 }
