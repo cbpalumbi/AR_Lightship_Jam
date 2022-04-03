@@ -96,7 +96,7 @@ GameObject:
   - component: {fileID: 91291314043098317}
   m_Layer: 0
   m_Name: sushi_roll
-  m_TagString: Untagged
+  m_TagString: sushi
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

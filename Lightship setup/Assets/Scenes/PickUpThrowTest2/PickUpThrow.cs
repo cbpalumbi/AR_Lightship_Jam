@@ -9,6 +9,7 @@ using Niantic.ARDK.AR.Configuration;
 using Unity.Collections;
 using Niantic.ARDK.AR.Mesh;
 using Niantic.ARDK.Utilities;
+
  
 public class PickUpThrow : MonoBehaviour
 {
@@ -43,6 +44,31 @@ public class PickUpThrow : MonoBehaviour
             }
         }
     }
+   
+    private bool ValidTag(string tag) {
+
+        switch(tag) {
+            case "pea" :
+                return true; 
+            case "cheese" :
+                return true;
+            case "flour" :
+                return true;
+            case "rice" :
+                return true;
+            case "seaweed" :
+                return true;
+            case "fish" :
+                return true;
+            case "potato" :
+                return true;
+            default: 
+                return false; 
+
+        }
+        return false;
+        
+    }
 
     private void GetClosestObject() {
         Vector3 center = player.transform.position;
@@ -50,6 +76,13 @@ public class PickUpThrow : MonoBehaviour
         Collider[] colliders = Physics.OverlapSphere(center, radius);
         Collider nearestCollider = null;
         float minSqrDistance = Mathf.Infinity;
+
+        // for (int i = 0; i < colliders.Length; i++) {
+        //     if (!ValidTag(colliders[i].gameObject.tag)) {
+        //         colliders = colliders.RemoveAt(i);
+        //         //i++;
+        //     }
+        // }
 
         for (int i = 0; i < colliders.Length; i++) {  
             float sqrDistanceToCenter = (center - colliders[i].transform.position).sqrMagnitude;
@@ -67,12 +100,17 @@ public class PickUpThrow : MonoBehaviour
 
     IEnumerator PickUp(GameObject obj) {
         heldObject = obj;
-        obj.GetComponent<Collider>().enabled = false;
-        obj.GetComponent<Rigidbody>().isKinematic = true;
-        obj.transform.position = hands.transform.position;
-        obj.transform.rotation = hands.transform.rotation;
-        obj.transform.parent = hands.transform;
-        yield return new WaitForSeconds(2);
+
+        if (ValidTag(heldObject.tag)) {
+        
+            obj.GetComponent<Collider>().enabled = false;
+            obj.GetComponent<Rigidbody>().isKinematic = true;
+            obj.transform.position = hands.transform.position;
+            obj.transform.rotation = hands.transform.rotation;
+            obj.transform.parent = hands.transform;
+            yield return new WaitForSeconds(2);
+        }
+        
     }
 
     private void ThrowHeldObject() {

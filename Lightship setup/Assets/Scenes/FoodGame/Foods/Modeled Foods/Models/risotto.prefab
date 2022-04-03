@@ -339,7 +339,7 @@ GameObject:
   - component: {fileID: -7773040818530783645}
   m_Layer: 0
   m_Name: risotto
-  m_TagString: Untagged
+  m_TagString: risotto
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
