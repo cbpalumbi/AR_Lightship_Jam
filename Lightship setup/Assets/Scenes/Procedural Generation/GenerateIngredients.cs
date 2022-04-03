@@ -44,8 +44,6 @@ public class GardenChunk: MonoBehaviour
     }
     else if (vertexCount <= _despawnMaxVertexCount && (bool)_ingredient)
     {
-      // pull a plant!
-      StopCoroutine(GrowPlant());
       // removeIngredient(_ingredient);
       Destroy(_ingredient);
       _ingredient = null;
@@ -73,7 +71,6 @@ public class GardenChunk: MonoBehaviour
       plant.transform.localPosition = position;
       plant.transform.localRotation = rotation;
       plant.transform.localScale = Vector3.zero;
-      StartCoroutine(GrowPlant());
       return plant;
     }
  
@@ -89,21 +86,7 @@ public class GardenChunk: MonoBehaviour
     wall = Math.Abs(normal.y) < _wallNormalTolerance && _wallPrefabs.Count > 0;
     return wall || ground;
   }
- 
-  private IEnumerator GrowPlant()
-  {
-    yield return null;
- 
-    float progress = 0.0f;
-    // end scale has Y inverted because of the transform on the mesh root
-    Vector3 endScale = new Vector3(0.1f, 0.1f, 0.1f);
-    while (progress < 1.0f && (bool)_ingredient)
-    {
-      progress = Math.Min(1.0f, progress + Time.deltaTime / _growthDuration);
-      _ingredient.transform.localScale = Vector3.Lerp(Vector3.zero, endScale, progress);
-      yield return null;
-    }
-  }
+  
 
   /*
   private void removeIngredient(GameObject ingridient) {
