@@ -29,13 +29,14 @@ public class PickUpThrow : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (PlatformAgnosticInput.touchCount <= 0) { return; }
+        //if (PlatformAgnosticInput.touchCount <= 0) { return; }
  
         //if the user touches the screen then pick up nearest object in range
-        var touch = PlatformAgnosticInput.GetTouch(0);
-        Debug.Log("Touch");
+        //var touch = PlatformAgnosticInput.GetTouch(0);
+        Debug.Log(Input.touchCount);
         if (Input.touchCount > 0)
         {
+            Debug.Log("Touch Detected");
             if (heldObject == null) {
                 GetClosestObject();
             }
