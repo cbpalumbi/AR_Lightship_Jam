@@ -6,6 +6,16 @@ TagManager:
   tags:
   - BlueGoal
   - RedGoal
+  - rice
+  - pea
+  - cheese
+  - flour
+  - potato
+  - seaweed
+  - fish
+  - sushi
+  - risotto
+  - samosa
   layers:
   - Default
   - TransparentFX
