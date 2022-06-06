@@ -95,12 +95,18 @@ public class PlaceCauldron : MonoBehaviour
       );
 
       // Get the closest result
-      var result = results[0];
-
-      var hitPosition = result.WorldTransform.ToPosition();
+      Vector3 hitPosition;
+      if (results.Count > 0) {
+        hitPosition = results[0].WorldTransform.ToPosition();
+      } else {
+        hitPosition = Vector3.zero + new Vector3(0, 0, 2);
+      } 
 
       _placedObject = Instantiate(PlacementObjectPf, hitPosition, Quaternion.identity);
-      var anchor = result.Anchor;
+      if (results.Count > 0) {
+        var anchor = results[0].Anchor;
+      }
+      
       GetComponent<ARPlaneManager>().enabled = false;
       GetComponent<PlaceCauldron>().enabled = false;
     }
